@@ -19,11 +19,11 @@ function Hotel(){
              <p className={styles.title}>Pensjonat</p>
              <span className='badge bg-light text-dark'>Zakopane</span>
             </div>
-            <div className='col'>
+            <div className='col text-end'>
                 <h5>
                 Ocena: 8.3
                 </h5>
-                 <a href="#" className='btn btn-primary mt-2 px-5 float-end'>Pokaż</a>  
+                 <a href="#" className='btn btn-primary mt-2 px-4'>Pokaż</a>  
             </div>
         </div>
         

@@ -1,5 +1,6 @@
 .hotel{
-    margin-bottom: 20px
+    margin-bottom: 20px;
+    background-color: rgb(243, 239, 239);
 }
 .title{
     font-weight: bold;
@@ -10,4 +11,5 @@
     color: rgb(85, 84, 84);
     margin-top: 10px;
     font-size:0.99rem;
+    margin-bottom: 0;
 }
