@@ -13,7 +13,7 @@ class App extends Component {
       id: 1,
       name: 'Pod górami',
       city: 'Zakopane',
-      rating: '8.3',
+      rating: 8.3,
       description:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
       image:''
     },
@@ -21,7 +21,7 @@ class App extends Component {
       id: 2,
       name: 'Za lasami',
       city: 'Karpacz',
-      rating: '8.9',
+      rating: 8.9,
       description:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
       image:''
     }
