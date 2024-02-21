@@ -4,6 +4,7 @@ import Menu from './components/Menu/Menu'
 import Hotels from './components/Hotels/Hotels'
 import './index.css';
 import { Component } from 'react';
+import LoadingIcon from './components/UI/LoadingIcon/LoadingIcon';
 
 
 class App extends Component {
@@ -26,8 +27,9 @@ class App extends Component {
     }
   ]
     state = {
-    hotels: this.hotels
-  }
+    hotels: [],
+    loading: true,
+  };
 
   searchHandler(term){
     console.log('szukaj z app', term)
@@ -35,13 +37,26 @@ class App extends Component {
                     .filter(x => x.name.toLowerCase().includes(term.toLowerCase()))
     this.setState({ hotels });
   }
+  componentDidMount(){
+    setTimeout(() => {
+      this.setState({
+        hotels: this.hotels,
+        loading: false
+      });
+    }, 1000);
+    console.log("komponent zamontowany")
+  }
 
   render(){
+    console.log("komponent wyrenderowany")
   return (
     <div className="App">
     <Header onSearch={(term) => this.searchHandler(term)} />
     <Menu />
-    <Hotels hotels={this.state.hotels} />
+    {this.state.loading 
+    ? <LoadingIcon />
+    : <Hotels hotels={this.state.hotels} />
+    }
     </div>
   );
   }
