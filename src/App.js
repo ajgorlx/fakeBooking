@@ -55,8 +55,8 @@ class App extends Component {
   }
 
   changeTheme = () => {
-    const newTheme = this.context === 'primary' ? 'warning' : 'primary'
-    this.setState({theme: newTheme })
+    const newTheme = this.state.theme === 'primary' ? 'warning' : 'primary'
+    this.setState({ theme: newTheme })
   }
 
   render(){
@@ -65,31 +65,35 @@ class App extends Component {
      <Header>
      <Searchbar 
      onSearch={term => this.searchHandler(term)} 
-     theme={this.context}
+    
      />
-    <ThemeButton onChange={this.changeTheme}/>
+    <ThemeButton />
     </Header>
     )
     
     const menu = (
-      <Menu theme={this.context}/>
+      <Menu/>
     )
 
     const content = (
     this.state.loading 
-    ? <LoadingIcon theme={this.context}/>
+    ? <LoadingIcon/>
     : <Hotels 
     hotels={this.state.hotels}
-    theme={this.context}
+  
      />
     )
 
     const footer = (
-      <Footer theme={this.context} />
+      <Footer />
     )
     
   return (
-    <ThemeContext.Provider value="primary">
+    <ThemeContext.Provider value={{
+      theme: this.state.theme,
+      onChange: this.changeTheme
+      
+      }}>
     <Layout 
       header={header}
       menu={menu}

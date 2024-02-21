@@ -32,8 +32,8 @@ function Hotel(props){
                 Ocena: {props.rating}
                 </h5>
                 <ThemeContext.Consumer>
-                {value =>
-                 <a href="#" className={`btn btn-${value} mt-2 px-4`}>
+                {({theme}) =>
+                 <a href="#" className={`btn btn-${theme} mt-2 px-4`}>
                  Pokaż
                  </a>  
                 }

@@ -2,8 +2,8 @@ import ThemeContext from "../Context/themeContext";
 
 const Footer = (props) => (
     <ThemeContext.Consumer>
-    {value =>
-    <div className={`text-center m-3 text-${value}`}>
+    {({theme}) =>
+    <div className={`text-center m-3 text-${theme}`}>
     Noclegi 2024
     </div>
     }
