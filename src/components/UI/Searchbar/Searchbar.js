@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types'
+import ThemeContext from '../../Context/themeContext';
 
 const propTypes = {
   onSearch: PropTypes.func.isRequired
@@ -25,11 +26,15 @@ function Searchbar(props){
         className="form-control"
         type="text"
         placeholder="Szukaj..."/> 
+        <ThemeContext.Consumer>
+        {value =>
     <button
     onClick={search} 
-    className="btn btn-primary">
+    className={`ml-1 btn btn-${value}`}>
     Szukaj
     </button>
+        }
+    </ThemeContext.Consumer>
       </div>
     );
 }

@@ -1,6 +1,7 @@
 import styles from './Hotel.module.css'
 import hotelImg from '../../../assets/images/hotel.jpg'
 import PropTypes from 'prop-types';
+import ThemeContext from '../../Context/themeContext';
 
 const propTypes = {
     name: PropTypes.string.isRequired,
@@ -30,7 +31,13 @@ function Hotel(props){
                 <h5>
                 Ocena: {props.rating}
                 </h5>
-                 <a href="#" className='btn btn-primary mt-2 px-4'>Pokaż</a>  
+                <ThemeContext.Consumer>
+                {value =>
+                 <a href="#" className={`btn btn-${value} mt-2 px-4`}>
+                 Pokaż
+                 </a>  
+                }
+                 </ThemeContext.Consumer>
             </div>
         </div>
         

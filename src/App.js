@@ -3,11 +3,17 @@ import Header from './components/Header/Header'
 import Menu from './components/Menu/Menu'
 import Hotels from './components/Hotels/Hotels'
 import './index.css';
-import { Component } from 'react';
+import React, { Component } from 'react';
 import LoadingIcon from './components/UI/LoadingIcon/LoadingIcon';
+import Searchbar from './components/UI/Searchbar/Searchbar'
+import Layout from './components/Layout/Layout';
+import Footer from './components/Footer/Footer';
+import ThemeButton from './components/UI/ThemeButton/ThemeButton';
+import ThemeContext from './components/Context/themeContext';
 
 
 class App extends Component {
+  static contextType = ThemeContext;
   hotels=[
     {
       id: 1,
@@ -29,6 +35,7 @@ class App extends Component {
     state = {
     hotels: [],
     loading: true,
+    theme: 'primary'
   };
 
   searchHandler(term){
@@ -47,17 +54,49 @@ class App extends Component {
     console.log("komponent zamontowany")
   }
 
+  changeTheme = () => {
+    const newTheme = this.context === 'primary' ? 'warning' : 'primary'
+    this.setState({theme: newTheme })
+  }
+
   render(){
-    console.log("komponent wyrenderowany")
+
+    const header = (
+     <Header>
+     <Searchbar 
+     onSearch={term => this.searchHandler(term)} 
+     theme={this.context}
+     />
+    <ThemeButton onChange={this.changeTheme}/>
+    </Header>
+    )
+    
+    const menu = (
+      <Menu theme={this.context}/>
+    )
+
+    const content = (
+    this.state.loading 
+    ? <LoadingIcon theme={this.context}/>
+    : <Hotels 
+    hotels={this.state.hotels}
+    theme={this.context}
+     />
+    )
+
+    const footer = (
+      <Footer theme={this.context} />
+    )
+    
   return (
-    <div className="App">
-    <Header onSearch={(term) => this.searchHandler(term)} />
-    <Menu />
-    {this.state.loading 
-    ? <LoadingIcon />
-    : <Hotels hotels={this.state.hotels} />
-    }
-    </div>
+    <ThemeContext.Provider value="primary">
+    <Layout 
+      header={header}
+      menu={menu}
+      content={content}
+      footer={footer}
+    />
+    </ThemeContext.Provider>
   );
   }
 }
