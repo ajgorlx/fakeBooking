@@ -1,13 +1,15 @@
 .menu{
     margin: 0;
-    padding: 0;
+    padding: 10px;
     text-align: left;
+    background-color: rgb(235, 235, 235);
 }
 .menuItem{
     display: inline-block;
 }
 a{
     text-decoration: none;
+    color: rgb(104, 104, 104);
 }
 .menuContainer{
     border: 1px solid #cdcdcd;

@@ -10,10 +10,10 @@ import Layout from './components/Layout/Layout';
 import Footer from './components/Footer/Footer';
 import ThemeButton from './components/UI/ThemeButton/ThemeButton';
 import ThemeContext from './components/Context/themeContext';
+import AuthContext from './components/Context/authContext';
 
 
 class App extends Component {
-  static contextType = ThemeContext;
   hotels=[
     {
       id: 1,
@@ -35,7 +35,8 @@ class App extends Component {
     state = {
     hotels: [],
     loading: true,
-    theme: 'primary'
+    theme: 'primary',
+    isAuthenticated: false
   };
 
   searchHandler(term){
@@ -89,6 +90,11 @@ class App extends Component {
     )
     
   return (
+    <AuthContext.Provider value=
+    {{ isAuthenticated: this.state.isAuthenticated,
+    login: () => this.setState ({ isAuthenticated:true }),
+    logout: () => this.setState ({ isAuthenticated:false })
+    }}>
     <ThemeContext.Provider value={{
       color: this.state.theme,
       changeTheme: this.changeTheme
@@ -101,6 +107,7 @@ class App extends Component {
       footer={footer}
     />
     </ThemeContext.Provider>
+    </AuthContext.Provider>
   );
   }
 }
