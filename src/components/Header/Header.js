@@ -5,10 +5,19 @@ import withMousePosition from '../../hoc/withMousePosition';
 
 function Header(props){
 
+    const paralaxStyles = {
+        transform: `translate(
+            ${props.mouseX / -20}px,
+            ${props.mouseY / 120}px
+        )`
+    }
+
     return (
         <header className={`${styles.header}`}>
-        {props.mouseX}
-        {props.mouseY}
+        <div 
+        className={styles.headerImage}
+        style={paralaxStyles}>
+        </div>
         {props.children}
         </header>
     );
