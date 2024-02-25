@@ -72,15 +72,15 @@ function App() {
     dispatch({ type: 'set-hotels', hotels: newHotels });
   };
 
-  const getBestHotel = useCallback((options) => {
-    if (state.hotels.length < options.minHotel) {
+  const getBestHotel= () => {
+    if (state.hotels.length < 2) {
       return null;
     } else {
       return state.hotels
       .sort((a, b) => a.rating > b.rating ? -1 : 1)
       [0];
     }
-  }, [state.hotels])
+  }
 
 useEffect(() =>{
     setTimeout(() => {
@@ -103,7 +103,7 @@ useEffect(() =>{
    ? <LoadingIcon/>
    : (
    <>
-   <BestHotel getHotel={getBestHotel}/>
+   {getBestHotel() ? <BestHotel getHotel={getBestHotel}/> :null}
    <Hotels hotels={state.hotels}/>
    </>
    )
