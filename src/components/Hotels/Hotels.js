@@ -31,8 +31,5 @@ function Hotels(props) {
 
 Hotels.propTypes = propTypes;
 
-const areEqual = (prevProps, nextProps) => {
-    return prevProps.hotels === nextProps.hotels;
-}
 
 export default Hotels
