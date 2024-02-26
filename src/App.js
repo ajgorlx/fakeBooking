@@ -13,6 +13,7 @@ import ThemeContext from './components/Context/themeContext';
 import AuthContext from './components/Context/authContext';
 import BestHotel from './components/Hotels/BestHotel/BestHotel';
 import InspiringQuote from './components/UI/InspitingQuote/InspitingQuote';
+import useStateStorage from './hooks/useStateStorage';
 
 
 const backendHotels = [
@@ -56,13 +57,14 @@ const initialState = {
   hotels:[],
   loading: true,
   theme: 'primary',
-  isAuthenticated: false
+  isAuthenticated: true
 }
 
 
 function App() {
  
   const [state, dispatch] = useReducer(reducer, initialState)
+  const [storage, setStorage] = useStateStorage('klucz', 'Wartość startowa')
 
   const searchHandler = term =>{
       const newHotels = [...backendHotels]
@@ -103,7 +105,13 @@ useEffect(() =>{
    ? <LoadingIcon/>
    : (
    <>
-   {getBestHotel() ? <BestHotel getHotel={getBestHotel}/> :null}
+   <input 
+   type='text' 
+   value={storage} 
+   onChange={e => setStorage(e.target.value)}/>
+   {getBestHotel()
+      ? <BestHotel getHotel={getBestHotel}/> 
+      :null}
    <Hotels hotels={state.hotels}/>
    </>
    )
