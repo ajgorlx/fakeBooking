@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import ThemeContext from '../../Context/themeContext';
 import { useContext } from 'react';
 import useAuth from '../../../hooks/useAuth';
+import { Link } from 'react-router-dom';
 
 const propTypes = {
     name: PropTypes.string.isRequired,
@@ -18,7 +19,7 @@ function Hotel(props){
     const [auth] = useAuth();
 
     const clickHandler = e => {
-        e.preventDefault();
+       // e.preventDefault();
         props.onOpen(props);
     }
     
@@ -42,11 +43,14 @@ function Hotel(props){
                 <h5>
                 Ocena: {props.rating}
                 </h5>
-                 <a href="#" 
+                <Link to={`/hotel/${props.id}`}>
+                Pokaż
+                </Link>
+                 {/* <a href="#" 
                  onClick={clickHandler}
                  className={`btn btn-${theme.color} mt-2 px-4`}>
                  Pokaż
-                 </a>  
+                 </a>   */}
             </div>
         </div>
         

@@ -3,7 +3,8 @@ import Header from './components/Header/Header'
 import Menu from './components/Menu/Menu'
 import Hotels from './components/Hotels/Hotels'
 import './index.css';
-import { useCallback, useEffect, useReducer } from 'react';
+import { BrowserRouter as Router, Link, Route, Routes } from 'react-router-dom';
+import { useEffect, useReducer } from 'react';
 import LoadingIcon from './components/UI/LoadingIcon/LoadingIcon';
 import Searchbar from './components/UI/Searchbar/Searchbar'
 import Layout from './components/Layout/Layout';
@@ -110,23 +111,34 @@ useEffect(() =>{
    </Header>
    )
    const content = (
-   state.loading 
-   ? <LoadingIcon/>
-   : (
-   <>
-   {lastHotel ? <LastHotel {...lastHotel} onRemove={removeLastHotel}/> : null}
-   {getBestHotel()
-      ? <BestHotel getHotel={getBestHotel}/> 
-      :null}
-   <Hotels onOpen={openHotel} hotels={state.hotels}/>
-   </>
+    <>
+    <Routes>
+      <Route exact path='/' element={
+        <>
+      {lastHotel ? <LastHotel {...lastHotel} onRemove={removeLastHotel}/> : null}
+      {getBestHotel()
+      ? <BestHotel getHotel={getBestHotel} />
+      : null
+      }
+      <Hotels onOpen={openHotel} hotels={state.hotels} />
+      </>
+      }
+      />
+
+      <Route path='/hotel/:id'
+      element={
+      <h1>To jest jakiś gotel!</h1>
+      }
+      />
+
+      </Routes>
+    </>
    )
-   );
    const footer =  <Footer />;
    const menu = <Menu/>;
-   
-return (
 
+return (
+<Router>
 <AuthContext.Provider value=
     {{ isAuthenticated: state.isAuthenticated,
     login: () => dispatch({ type: 'login'}),
@@ -140,11 +152,12 @@ return (
     <Layout 
       header={header}
       menu={menu}
-      content={content}
+      content={state.loading  ? <LoadingIcon/> : content}
       footer={footer}
     />
     </ThemeContext.Provider>
     </AuthContext.Provider>
+    </Router>
 );
 };
 
