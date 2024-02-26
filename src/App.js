@@ -1,10 +1,9 @@
 import './App.css';
 import Header from './components/Header/Header'
 import Menu from './components/Menu/Menu'
-import Hotels from './components/Hotels/Hotels'
 import './index.css';
 import { BrowserRouter as Router, Link, Route, Routes } from 'react-router-dom';
-import { useEffect, useReducer } from 'react';
+import { useReducer } from 'react';
 import LoadingIcon from './components/UI/LoadingIcon/LoadingIcon';
 import Searchbar from './components/UI/Searchbar/Searchbar'
 import Layout from './components/Layout/Layout';
@@ -12,13 +11,10 @@ import Footer from './components/Footer/Footer';
 import ThemeButton from './components/UI/ThemeButton/ThemeButton';
 import ThemeContext from './components/Context/themeContext';
 import AuthContext from './components/Context/authContext';
-import BestHotel from './components/Hotels/BestHotel/BestHotel';
 import InspiringQuote from './components/UI/InspitingQuote/InspitingQuote';
-import LastHotel from './LastHotel/LastHotel';
-import useStateStorage from './hooks/useStateStorage';
-import useWebsiteTitle from './hooks/useWebsiteTitle';
-
-
+import { initialState, reducer } from './reducer';
+import Home from './pages/Home';
+import ReducerContext from './components/Context/reducerContext';
 
 const backendHotels = [
   {
@@ -39,36 +35,10 @@ const backendHotels = [
   }
 ]
 
-const reducer = (state, action) => {
-  switch (action.type) {
-    case 'change-theme':
-    const theme = state.theme === 'danger' ? 'primary' : 'danger'
-      return {...state, theme};
-      case 'set-hotels':
-        return {...state, hotels: action.hotels};
-      case 'set-loading':
-        return {...state, loading: action.loading};
-      case 'login':
-        return {...state, isAuthenticated: true};
-      case 'logout':
-        return {...state, isAuthenticated: false};
-      default:
-        throw new Error('Nie ma takiej akcji' + action.type)
-  }
-}
-
-const initialState = {
-  hotels:[],
-  loading: true,
-  theme: 'primary',
-  isAuthenticated: true
-}
-
-
 function App() {
-  const [lastHotel, setLastHotel] = useStateStorage(null);
+
   const [state, dispatch] = useReducer(reducer, initialState)
-  useWebsiteTitle('Strona główna')
+
 
   const searchHandler = term =>{
       const newHotels = [...backendHotels]
@@ -77,31 +47,7 @@ function App() {
           .includes(term.toLowerCase()))
     dispatch({ type: 'set-hotels', hotels: newHotels });
   };
-
-  const getBestHotel= () => {
-    if (state.hotels.length < 2) {
-      return null;
-    } else {
-      return state.hotels
-      .sort((a, b) => a.rating > b.rating ? -1 : 1)
-      [0];
-    }
-  }
-
-  const openHotel = (hotel) => {
-    setLastHotel(hotel);
-  }
-
-  const removeLastHotel = () => setLastHotel(null)
-
-useEffect(() =>{
-    setTimeout(() => {
-     dispatch({ type: 'set-hotels', hotels: backendHotels });
-     dispatch({ type: 'set-loading', loading: false })
-    }, 1000);
-  },[])
-
-
+  
   const header = (
   <Header>
   <InspiringQuote />
@@ -113,16 +59,7 @@ useEffect(() =>{
    const content = (
     <>
     <Routes>
-      <Route exact path='/' element={
-        <>
-      {lastHotel ? <LastHotel {...lastHotel} onRemove={removeLastHotel}/> : null}
-      {getBestHotel()
-      ? <BestHotel getHotel={getBestHotel} />
-      : null
-      }
-      <Hotels onOpen={openHotel} hotels={state.hotels} />
-      </>
-      }
+      <Route exact path='/' element={<Home />}
       />
 
       <Route path='/hotel/:id'
@@ -149,12 +86,17 @@ return (
       changeTheme: () => dispatch({ type: 'change-theme' })
       
       }}>
+    <ReducerContext.Provider value={{
+      state: state,
+      dispatch: dispatch
+    }}>
     <Layout 
       header={header}
       menu={menu}
-      content={state.loading  ? <LoadingIcon/> : content}
+      content={content}
       footer={footer}
     />
+    </ReducerContext.Provider>
     </ThemeContext.Provider>
     </AuthContext.Provider>
     </Router>
