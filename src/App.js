@@ -13,7 +13,10 @@ import ThemeContext from './components/Context/themeContext';
 import AuthContext from './components/Context/authContext';
 import BestHotel from './components/Hotels/BestHotel/BestHotel';
 import InspiringQuote from './components/UI/InspitingQuote/InspitingQuote';
+import LastHotel from './LastHotel/LastHotel';
 import useStateStorage from './hooks/useStateStorage';
+import useWebsiteTitle from './hooks/useWebsiteTitle';
+
 
 
 const backendHotels = [
@@ -62,9 +65,9 @@ const initialState = {
 
 
 function App() {
- 
+  const [lastHotel, setLastHotel] = useStateStorage(null);
   const [state, dispatch] = useReducer(reducer, initialState)
-  const [storage, setStorage] = useStateStorage('klucz', 'Wartość startowa')
+  useWebsiteTitle('Strona główna')
 
   const searchHandler = term =>{
       const newHotels = [...backendHotels]
@@ -83,6 +86,12 @@ function App() {
       [0];
     }
   }
+
+  const openHotel = (hotel) => {
+    setLastHotel(hotel);
+  }
+
+  const removeLastHotel = () => setLastHotel(null)
 
 useEffect(() =>{
     setTimeout(() => {
@@ -105,14 +114,11 @@ useEffect(() =>{
    ? <LoadingIcon/>
    : (
    <>
-   <input 
-   type='text' 
-   value={storage} 
-   onChange={e => setStorage(e.target.value)}/>
+   {lastHotel ? <LastHotel {...lastHotel} onRemove={removeLastHotel}/> : null}
    {getBestHotel()
       ? <BestHotel getHotel={getBestHotel}/> 
       :null}
-   <Hotels hotels={state.hotels}/>
+   <Hotels onOpen={openHotel} hotels={state.hotels}/>
    </>
    )
    );
