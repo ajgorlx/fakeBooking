@@ -1,21 +1,17 @@
 import { useContext, useEffect, useRef, useState } from 'react';
-import PropTypes from 'prop-types'
 import ThemeContext from '../../Context/themeContext';
+import { useNavigate } from 'react-router-dom'
 
-const propTypes = {
-  onSearch: PropTypes.func.isRequired
-}
 
 function Searchbar(props){
 
   const [term, setTerm] = useState('');
-  
   const theme = useContext(ThemeContext)
-
   const inputRef = useRef();
+  const history = useNavigate()
 
   const search = ( ) => {
-    props.onSearch(term);
+    history(`/wyszukaj/${term}`);
   }
   const onKeyDownHandler = e => {
     if (e.key === 'Enter'){
@@ -53,6 +49,6 @@ function Searchbar(props){
     );
 }
 
-Searchbar.propTypes = propTypes
+
 
 export default Searchbar;

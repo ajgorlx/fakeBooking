@@ -2,9 +2,8 @@ import BestHotel from './../components/Hotels/BestHotel/BestHotel';
 import LastHotel from './../LastHotel/LastHotel';
 import useStateStorage from './../hooks/useStateStorage';
 import useWebsiteTitle from './../hooks/useWebsiteTitle';
-import { useContext, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Hotels from '.././components/Hotels/Hotels'
-import ReducerContext from '../components/Context/reducerContext';
 import LoadingIcon from '../components/UI/LoadingIcon/LoadingIcon';
 
 const backendHotels = [
@@ -27,16 +26,18 @@ const backendHotels = [
   ]
 
 export default function Home(props){
-
-const [lastHotel, setLastHotel] = useStateStorage(null);
-const reducer = useContext(ReducerContext)
 useWebsiteTitle('Strona główna')
 
+const [lastHotel, setLastHotel] = useStateStorage(null);
+
+const [loading, setLoading] = useState(true)
+const [hotels, setHotels] = useState([])
+
     const getBestHotel= () => {
-        if (reducer.state.hotels.length < 2) {
+        if (hotels.length < 2) {
           return null;
         } else {
-          return reducer.state.hotels
+          return hotels
           .sort((a, b) => a.rating > b.rating ? -1 : 1)
           [0];
         }
@@ -47,23 +48,19 @@ useWebsiteTitle('Strona główna')
 
       useEffect(() =>{
         setTimeout(() => {
-         reducer.dispatch({ type: 'set-hotels', hotels: backendHotels });
-         reducer.dispatch({ type: 'set-loading', loading: false })
+         setHotels(backendHotels)
+         setLoading(false)
         }, 1000);
       },[])
 
-      if (reducer.state.loading) {
-        return <LoadingIcon />
-      }
-
-    return (
+    return loading ? <LoadingIcon /> : (
         <>
             {lastHotel ? <LastHotel {...lastHotel} onRemove={removeLastHotel}/> : null}
             {getBestHotel()
             ? <BestHotel getHotel={getBestHotel} />
             : null
             }
-            <Hotels onOpen={openHotel} hotels={reducer.state.hotels} />
+            <Hotels onOpen={openHotel} hotels={hotels} />
         </>   
     )
 } 

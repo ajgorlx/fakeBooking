@@ -1,5 +1,6 @@
 import style from './Menu.module.css'
 import useAuth from '../../hooks/useAuth';
+import { Link } from 'react-router-dom';
 
 function Menu(){
     const [auth, setAuth] = useAuth()
@@ -19,7 +20,7 @@ function Menu(){
             <ul className={`${style.menu} breadcrumb` }>
                 <li 
                 className={`${style.menuItem} breadcrumb-item`}>
-                    <a href="#">Home</a>
+                    <Link to='/'>Home</Link>
                 </li>
                     {auth ? (  
                 <li 

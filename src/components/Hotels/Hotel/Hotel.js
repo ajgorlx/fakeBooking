@@ -43,14 +43,13 @@ function Hotel(props){
                 <h5>
                 Ocena: {props.rating}
                 </h5>
-                <Link to={`/hotel/${props.id}`}>
-                Pokaż
-                </Link>
-                 {/* <a href="#" 
-                 onClick={clickHandler}
-                 className={`btn btn-${theme.color} mt-2 px-4`}>
+                <Link 
+                to={`/hotele/${props.id}`} 
+                onClick={clickHandler}
+                className={`btn btn-${theme.color} mt-2 px-4`}
+                >
                  Pokaż
-                 </a>   */}
+                </Link>
             </div>
         </div>
         
