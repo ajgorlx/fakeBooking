@@ -16,6 +16,7 @@ import Home from './pages/Home';
 import ReducerContext from './components/Context/reducerContext';
 import Hotel from './pages/Hotel';
 import Search from './pages/Search';
+import Profile from './Profile/Profile';
 
 
 
@@ -33,22 +34,12 @@ function App() {
    )
    const content = (
     <>
-      <Routes>
-      <Route 
-      exact path='/' 
-      element={<Home />}
-      />
-
-    <Route 
-      path='/hotele/:id'
-      element={<Hotel />}
-    />
-    <Route 
-      path='/wyszukaj/:term'
-      element={<Search />}
-    />
+    <Routes>
+      <Route end path='/' element={<Home />}/>
+      <Route path='/hotele/:id' element={<Hotel />}/>
+      <Route path='/profil' element={<Profile />}/>
+      <Route path='/wyszukaj/:term' element={<Search />}/>
     </Routes>
-
     </>
    )
    const footer =  <Footer />;

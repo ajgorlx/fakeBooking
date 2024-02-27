@@ -15,3 +15,6 @@ a{
     border: 1px solid #cdcdcd;
     margin: 10px 0;
 }
+.menuItem a.menuItemActive {
+    text-decoration: underline;
+}
