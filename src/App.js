@@ -16,7 +16,11 @@ import Home from './pages/Home';
 import ReducerContext from './components/Context/reducerContext';
 import Hotel from './pages/Hotel';
 import Search from './pages/Search';
-import Profile from './Profile/Profile';
+import Profile from './pages/Profile/Profile';
+import MyHotels from './pages/Profile/MyHotels';
+import ProfileDetails from './pages/Profile/ProfileDetails';
+import NotFound from './pages/404/404';
+import Login from './pages/Auth/Login/Login';
 
 
 
@@ -37,8 +41,13 @@ function App() {
     <Routes>
       <Route end path='/' element={<Home />}/>
       <Route path='/hotele/:id' element={<Hotel />}/>
-      <Route path='/profil' element={<Profile />}/>
-      <Route path='/wyszukaj/:term' element={<Search />}/>
+      <Route path='/wyszukaj/:term?' element={<Search />}/>
+      <Route path="/zaloguj" element={<Login/>}/>
+    <Route path='/profil' element={<Profile />}>
+      <Route path="/profil/hotele" element={<MyHotels/>}/>
+      <Route path="/profil" element={<ProfileDetails/>}/>
+    </Route>
+    <Route path="*" element={<NotFound />}/>
     </Routes>
     </>
    )
