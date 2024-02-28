@@ -1,0 +1,23 @@
+.form-group{
+ padding: 4px;
+ margin: 0 0 14px;   
+ position: relative;
+
+}
+.custom-control-label{
+display: flexbox;
+margin: 2px;
+}
+.btn-success{
+    padding: 7px;
+    position: absolute;
+    bottom: 18px;
+    right: 26px;
+}
+.group{
+    margin: 0 0 8px;
+}
+h4{
+    margin: 0 0 10px;
+    
+}

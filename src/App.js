@@ -16,12 +16,13 @@ import Home from './pages/Home';
 import ReducerContext from './components/Context/reducerContext';
 import Hotel from './pages/Hotel';
 import Search from './pages/Search';
-import MyHotels from './pages/Profile/MyHotels';
+import MyHotels from './pages/Profile/MyHotels/MyHotels';
 import ProfileDetails from './pages/Profile/ProfileDetails';
 import NotFound from './pages/404/404';
 import Login from './pages/Auth/Login/Login';
 import AuthenticatedRoute from './components/AuthenticatedRoute/AuthenticatedRoutes';
 import ErrorBoundary from './hoc/ErrorBoundary';
+import AddHotel from './pages/Profile/MyHotels/AddHotel';
 
 
 const Profile = lazy(() => import ('./pages/Profile/Profile'));
@@ -44,6 +45,7 @@ function App() {
       <Route end path='/' element={<Home />}/>
       <Route path='/hotele/:id' element={<Hotel />}/>
       <Route path='/wyszukaj/:term?' element={<Search />}/>
+      <Route path='/profil/hotele/dodaj' element={<AddHotel />}/>
       <Route path="/zaloguj" element={<Login/>}/>
       <Route path="/profil" element={
         <AuthenticatedRoute isAuthenticated={state.isAuthenticated}>
