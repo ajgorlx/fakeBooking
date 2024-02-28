@@ -2,8 +2,8 @@ import './App.css';
 import Header from './components/Header/Header'
 import Menu from './components/Menu/Menu'
 import './index.css';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { useReducer } from 'react';
+import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
+import { Suspense, lazy, useReducer } from 'react';
 import Searchbar from './components/UI/Searchbar/Searchbar'
 import Layout from './components/Layout/Layout';
 import Footer from './components/Footer/Footer';
@@ -16,16 +16,15 @@ import Home from './pages/Home';
 import ReducerContext from './components/Context/reducerContext';
 import Hotel from './pages/Hotel';
 import Search from './pages/Search';
-import Profile from './pages/Profile/Profile';
 import MyHotels from './pages/Profile/MyHotels';
 import ProfileDetails from './pages/Profile/ProfileDetails';
 import NotFound from './pages/404/404';
 import Login from './pages/Auth/Login/Login';
-
-
+import AuthenticatedRoute from './components/AuthenticatedRoute/AuthenticatedRoutes';
 
 function App() {
-
+  
+  const Profile = lazy(() => import ('./pages/Profile/Profile'));
   const [state, dispatch] = useReducer(reducer, initialState)
 
 
@@ -37,19 +36,25 @@ function App() {
    </Header>
    )
    const content = (
-    <>
+<>
     <Routes>
       <Route end path='/' element={<Home />}/>
       <Route path='/hotele/:id' element={<Hotel />}/>
       <Route path='/wyszukaj/:term?' element={<Search />}/>
       <Route path="/zaloguj" element={<Login/>}/>
-    <Route path='/profil' element={<Profile />}>
-      <Route path="/profil/hotele" element={<MyHotels/>}/>
-      <Route path="/profil" element={<ProfileDetails/>}/>
-    </Route>
+      <Route path="/profil" element={
+        <AuthenticatedRoute isAuthenticated={state.isAuthenticated}>
+          <Suspense fallback={<div>Ładowanie...</div>}>
+            <Profile />
+          </Suspense>
+        </AuthenticatedRoute>} >
+      <Route path="" element={<ProfileDetails />} />
+      <Route path="hotele" element={<MyHotels />} />
+      </Route>
     <Route path="*" element={<NotFound />}/>
     </Routes>
-    </>
+</>
+  
    )
    const footer =  <Footer />;
    const menu = <Menu/>;

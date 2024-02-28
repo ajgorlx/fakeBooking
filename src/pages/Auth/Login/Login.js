@@ -11,7 +11,7 @@ export default function Login(props) {
             <label>Hasło</label> 
             <input type="password" className="form-control"/>   
         </div>
-        <button className="btn btn-primary">Zapisz</button>
+        <button className="btn btn-primary">Zaloguj</button>
     </form>
     </div>
     );
