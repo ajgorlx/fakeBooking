@@ -1,5 +1,5 @@
 import BestHotel from './../components/Hotels/BestHotel/BestHotel';
-import LastHotel from './../LastHotel/LastHotel';
+import LastHotel from '../components/Hotels/LastHotel/LastHotel';
 import useStateStorage from './../hooks/useStateStorage';
 import useWebsiteTitle from './../hooks/useWebsiteTitle';
 import { useEffect, useState } from 'react';
