@@ -21,10 +21,13 @@ import ProfileDetails from './pages/Profile/ProfileDetails';
 import NotFound from './pages/404/404';
 import Login from './pages/Auth/Login/Login';
 import AuthenticatedRoute from './components/AuthenticatedRoute/AuthenticatedRoutes';
+import ErrorBoundary from './hoc/ErrorBoundary';
+
+
+const Profile = lazy(() => import ('./pages/Profile/Profile'));
 
 function App() {
   
-  const Profile = lazy(() => import ('./pages/Profile/Profile'));
   const [state, dispatch] = useReducer(reducer, initialState)
 
 
@@ -75,12 +78,14 @@ return (
       state: state,
       dispatch: dispatch
     }}>
+    <ErrorBoundary>
     <Layout 
       header={header}
       menu={menu}
       content={content}
       footer={footer}
     />
+    </ErrorBoundary>
     </ReducerContext.Provider>
     </ThemeContext.Provider>
     </AuthContext.Provider>
