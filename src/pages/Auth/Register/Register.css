@@ -1,0 +1,10 @@
+.card{
+    position: relative;
+   }
+   .btn-success{
+       padding: 7px;
+       position:static ;
+       bottom: 18px;
+       right: 200px;
+   }
+   

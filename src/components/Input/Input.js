@@ -9,7 +9,7 @@ const InputText = props => {
             value={props.value}
             onChange={e => props.onChange(e.target.value)}
             type={props.type}
-            className={`form-control ${!props.error && props.showError ? 'is-invalid' : ''}`}/>
+            className={`form-control ${props.error && props.showError ? 'is-invalid' : ''}`}/>
         <div className="invalid-feedback">
             {props.error}
         </div>
@@ -24,7 +24,7 @@ const InputTextarea = props => {
                value={props.value}
                onChange={e => props.onChange(e.target.value)}
                type={props.type}
-               className={`form-control ${!props.error && props.showError ? 'is-invalid' : ''}`}/>
+               className={`form-control ${props.error && props.showError ? 'is-invalid' : ''}`}/>
            <div className="invalid-feedback">
                {props.error}
            </div>
@@ -37,7 +37,7 @@ const InputSelect = props => {
         <label>{props.label}</label>
         <select 
             value={props.value} 
-            className={`form-control ${!props.error && props.showError ? 'is-invalid' : ''}`}
+            className={`form-control ${props.error && props.showError ? 'is-invalid' : ''}`}
             onChange={e => props.onChange(e.target.value)}>
              {props.options.map(option =>
               <option value={option.value} key={option.value}>{option.label}</option>)}
@@ -126,6 +126,10 @@ function Input(props){
   switch (props.type){
     case 'select' :
       return <InputSelect {...props} />
+    case 'email' :
+        return <InputText {...props} type="email" />
+    case 'password' :
+      return <InputText {...props} type="password" />
     case 'checkbox' :
       return <InputCheckBox {...props} />
     case 'file' :

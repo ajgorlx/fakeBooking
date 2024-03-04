@@ -8,7 +8,13 @@ export function validateEmail(text){
             return value ? '' : 'Pole wymagane';
         },
         min(value, rule){
-            return value.length < rule.length ? '' : `Min. ${rule.length} znaki`
+            return value.length >= rule.length ? '' : `Min. ${rule.length} znaki`
+        },
+        password(value, rule){
+            return value.length >= rule.length ? '' : `Min. ${rule.length} znaków`
+        },
+        email(value){
+            return validateEmail(value) ? '' : 'Niepoprawny email'
         }
         
     }
@@ -18,7 +24,7 @@ export function validate (rules =[], value){
         const rule = rules[i]
     
 
-        if(rule instanceof Object ){
+        if (rule instanceof Object) {
             const errorMessage = availableRules[rule.rule](value, rule)
             if (errorMessage){
                 return errorMessage;

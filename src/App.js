@@ -23,6 +23,7 @@ import Login from './pages/Auth/Login/Login';
 import AuthenticatedRoute from './components/AuthenticatedRoute/AuthenticatedRoutes';
 import ErrorBoundary from './hoc/ErrorBoundary';
 import AddHotel from './pages/Profile/MyHotels/AddHotel';
+import Register from './pages/Auth/Register/Register';
 
 
 const Profile = lazy(() => import ('./pages/Profile/Profile'));
@@ -47,6 +48,7 @@ function App() {
       <Route path='/wyszukaj/:term?' element={<Search />}/>
       <Route path='/profil/hotele/dodaj' element={<AddHotel />}/>
       <Route path="/zaloguj" element={<Login/>}/>
+      <Route path="/zarejestruj" element={<Register/>}/>
       <Route path="/profil" element={
         <AuthenticatedRoute isAuthenticated={state.isAuthenticated}>
           <Suspense fallback={<div>Ładowanie...</div>}>
