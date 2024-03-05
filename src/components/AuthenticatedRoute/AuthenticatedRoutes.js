@@ -6,7 +6,7 @@ import Profile from "../../pages/Profile/Profile";
 export default function AuthenticatedRoute(props){
     const context = useContext(ReducerContext);
 
-    return context.state.isAuthenticated
+    return context.state.user
     ? <Profile /> 
     : <Navigate to='/zaloguj'/>
 }

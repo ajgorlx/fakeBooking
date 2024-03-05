@@ -5,11 +5,6 @@ import { Link, NavLink } from 'react-router-dom';
 function Menu(){
     const [auth, setAuth] = useAuth()
 
-    const login = (e) => {
-        e.preventDefault();
-        setAuth(true);
-    }
-
     const logout = (e) => {
         e.preventDefault();
         setAuth(false);
@@ -52,8 +47,13 @@ function Menu(){
                     to='/zarejestruj'> Zarejestruj</NavLink>
                 </li>
                 <li 
-                className={`${style.menuItem} breadcrumb-item`}>     
-                     <a href='#' onClick={login}>Zaloguj</a>
+                    className={`${style.menuItem} breadcrumb-item`}>     
+                     <NavLink className={({ isActive }) => 
+                    isActive 
+                    ? style.menuItemActive 
+                    : style.menuItem}
+                     to="zaloguj">Zaloguj
+                     </NavLink>
                 </li>
                 </>
                   )

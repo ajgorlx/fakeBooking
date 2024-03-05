@@ -3,7 +3,7 @@ import Header from './components/Header/Header'
 import Menu from './components/Menu/Menu'
 import './index.css';
 import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
-import { Suspense, lazy, useReducer } from 'react';
+import { Suspense, lazy, useEffect, useReducer } from 'react';
 import Searchbar from './components/UI/Searchbar/Searchbar'
 import Layout from './components/Layout/Layout';
 import Footer from './components/Footer/Footer';
@@ -31,8 +31,7 @@ const Profile = lazy(() => import ('./pages/Profile/Profile'));
 function App() {
   
   const [state, dispatch] = useReducer(reducer, initialState)
-
-
+  
   const header = (
   <Header>
   <InspiringQuote />
@@ -69,8 +68,8 @@ function App() {
 return (
 <Router>
 <AuthContext.Provider value=
-    {{ isAuthenticated: state.isAuthenticated,
-    login: () => dispatch({ type: 'login'}),
+    {{ user: state.user,
+    login: (user) => dispatch({ type: 'login', user}),
     logout: () => dispatch({ type: 'logout'})
     }}>
     <ThemeContext.Provider value={{

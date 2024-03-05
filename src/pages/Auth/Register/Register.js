@@ -3,10 +3,14 @@ import { useState } from "react";
 import { validate } from "../../../helpers/validations";
 import Input from "../../../components/Input/Input";
 import "../Register/Register.css"
-import axios from "../../../axios";
+import axios from "../../../axios-auth";
+import useAuth from "../../../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 
 
 export default function Register(props){
+    const history = useNavigate()
+    const [auth, setAuth] = useAuth()
     const [loading, setLoading] = useState(false)
     const [form, setForm] = useState({
         email:{
@@ -22,7 +26,7 @@ export default function Register(props){
             rules: ['required' ,{rule: 'password', length: 6}]
         },
     });
-    
+    const [error, setError] = useState('')
     const valid = !Object.values(form)
     .map(input => input.error)
     .filter(error => error)
@@ -32,8 +36,23 @@ export default function Register(props){
         e.preventDefault();
         setLoading(true);
     
-    const res = await axios.get('/users.json')
-    console.log(res)
+try{
+    const res = await axios.post('/accounts:signUp?', {
+    email: form.email.value,
+    password: form.password.value,
+    returnSecureToken: true
+    });
+
+    setAuth({
+        email: res.data.email,
+        token: res.data.idToken,
+        userId: res.data.localId
+    })
+    history ('/')
+}   catch (ex) {
+    console.log(ex.response)
+    setError(ex.response.data.error.message)
+}
     
         setTimeout(() => {
             setLoading(false);
@@ -51,6 +70,9 @@ export default function Register(props){
             error: error
         }
             })
+    }
+    if (auth) {
+        history ('/')
     }
 
     return(
@@ -80,6 +102,10 @@ export default function Register(props){
             onChange={val => changeHandler(val, "password")}
             error={form.password.error}
             showError={form.password.showError} />
+
+        {error ? (
+            <div className="alert alert-danger">{error}</div>
+        ) :null}
 
         <div className="text-right">
             <LoadingButton
