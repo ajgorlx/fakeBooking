@@ -3,8 +3,13 @@ import LoadingButton from "../../../components/UI/LoadingButton/LoadingButton";
 import { useRef, useState } from "react";
 import Input from "../../../components/Input/Input";
 import { validate } from "../../../helpers/validations";
+import axios from "../../../axios";
+import { useNavigate } from "react-router-dom";
+import useAuth from "../../../hooks/useAuth";
 
 const AddHotel = props => {
+    const [auth] = useAuth()
+    const history = useNavigate()
     const [form, setForm] = useState({
     name:{
         value: '',
@@ -54,13 +59,25 @@ const AddHotel = props => {
     .filter(error => error)
     .length;
 
-    const submit = e => {
+    const submit = async e => {
     e.preventDefault();
     setLoading(true);
 
-    setTimeout(() => {
-        setLoading(false);
-    }, 500);
+    try {
+        await axios.post('/hotels.json' ,{
+            name: form.name.value,
+            description: form.description.value,
+            city: form.city.value,
+            rooms: form.rooms.value,
+            features: form.features.value,
+            status: form.status.value,
+            user_id: auth.userId
+        })
+        history ('/profil/hotele')
+    } catch (ex){
+        console.log(ex.response)
+    }
+    setLoading(false);
     }
 
     const changeHandler = (value, fieldName) => {

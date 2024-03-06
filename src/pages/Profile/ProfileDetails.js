@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import LoadingButton from "../../components/UI/LoadingButton/LoadingButton";
 import { validateEmail } from "../../helpers/validations";
 import useAuth from "../../hooks/useAuth";
+import axios from "../../axios-auth";
 
 export default function ProfileDetails (props){
-    const [auth] = useAuth()
+    const [auth, setAuth] = useAuth()
     const [email, setEmail] = useState(auth.email)
     const [password, setPassword] = useState('')
     const [loading, setLoading] = useState('')
@@ -12,18 +13,34 @@ export default function ProfileDetails (props){
         email:'',
         password:''
     });
+    const [success, setSuccess] = useState(false)
     const buttonDisabled = Object.values(errors).filter(x => x).length;
 
-    const submit = (e) => {
+    const submit = async (e) => {
         e.preventDefault();
         setLoading(true);
-
-        setTimeout(() => {
-            //zapisywanie
-
+        try{
+          const data = {
+            idToken: auth.token,
+            email: email,
+            returnSecureToken: true
+          };
+          if (password){
+            data.password = password;
+          }
+          const res = await axios.post('accounts:update' , data)
+          setAuth({
+            email: res.data.email,
+            token: res.data.idToken,
+            userId: res.data.localId
+          })
+          setSuccess(true)
+        } catch (ex) {
+            console.log(ex.response)
+        }
             setLoading(false);
-        }, 500)
-    }
+        }
+    
 
 
     useEffect(() => {
@@ -36,10 +53,10 @@ export default function ProfileDetails (props){
     }, [email])
 
     useEffect(() => {
-        if(password.length >= 4 || !password){
+        if(password.length >= 6 || !password){
             setErrors({...errors, password: ''})
         } else {
-            setErrors({...errors, password: 'Wymagane przynajmniej 4 znaki!'})
+            setErrors({...errors, password: 'Wymagane przynajmniej 6 znaków!'})
         }
 
     }, [password])
@@ -47,6 +64,10 @@ export default function ProfileDetails (props){
     
     return (
         <form onSubmit={submit}>
+
+        {success ? ( 
+            <div className="alert alert-success">Dane zapisane!</div>
+        ) : null}
         <div className="form-group">
             <label>Email</label> 
             <input

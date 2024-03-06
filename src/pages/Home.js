@@ -5,25 +5,9 @@ import useWebsiteTitle from './../hooks/useWebsiteTitle';
 import { useEffect, useState } from 'react';
 import Hotels from '.././components/Hotels/Hotels'
 import LoadingIcon from '../components/UI/LoadingIcon/LoadingIcon';
+import axios from "../axios"
+import { objectToArrayWithId } from '../helpers/objects';
 
-const backendHotels = [
-    {
-      id: 1,
-      name: 'Pod górami',
-      city: 'Zakopane',
-      rating: 8.3,
-      description:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-      image:''
-    },
-    {
-      id: 2,
-      name: 'Za lasami',
-      city: 'Karpacz',
-      rating: 8.9,
-      description:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-      image:''
-    }
-  ]
 
 export default function Home(props){
 useWebsiteTitle('Strona główna')
@@ -45,12 +29,19 @@ const [hotels, setHotels] = useState([])
     
       const openHotel = (hotel) => {setLastHotel(hotel);}
       const removeLastHotel = () => setLastHotel(null)
-
+      const fetchHotels = async () => {
+        try {
+            const res = await axios.get('/hotels.json')
+            const newHotel = objectToArrayWithId(res.data)
+                            .filter(hotel => hotel.status === "1")
+            setHotels(newHotel)
+        }catch (ex) {
+            console.log(ex.response)
+        }
+        setLoading(false)
+    }
       useEffect(() =>{
-        setTimeout(() => {
-         setHotels(backendHotels)
-         setLoading(false)
-        }, 1000);
+        fetchHotels();
       },[])
 
     return loading ? <LoadingIcon /> : (

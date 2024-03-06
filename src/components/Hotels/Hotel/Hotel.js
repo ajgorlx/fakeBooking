@@ -5,6 +5,8 @@ import ThemeContext from '../../Context/themeContext';
 import { useContext } from 'react';
 import useAuth from '../../../hooks/useAuth';
 import { Link } from 'react-router-dom';
+import axios from '../../../axios'
+import { objectToArrayWithId } from '../../../helpers/objects';
 
 const propTypes = {
     name: PropTypes.string.isRequired,
@@ -20,7 +22,9 @@ function Hotel(props){
 
     const clickHandler = e => {
        // e.preventDefault();
-        props.onOpen(props);
+        if (props.onOpen){
+            props.onOpen(props);
+        }
     }
     
     return(
@@ -41,12 +45,12 @@ function Hotel(props){
             </div>
             <div className='col text-end'>
                 <h5>
-                Ocena: {props.rating}
+                Ocena: {props.rating ?? 0}
                 </h5>
                 <Link 
                 to={`/hotele/${props.id}`} 
                 onClick={clickHandler}
-                className={`btn btn-${theme.color} mt-2 px-4`}
+                className={`btn btn-${theme.color} ${styles.button}`}
                 >
                  Pokaż
                 </Link>
@@ -59,7 +63,7 @@ function Hotel(props){
         {props.description}
         </p>
         {auth 
-        ? <p className='mt-2'>Dostępność: 4 pokoje</p>
+        ? <p className='mt-2'>Dostępność: {props.rooms} pokoje</p>
         : <p className='mt-2'>Dostępność: zaloguj</p> }
         </div>
         </div>
