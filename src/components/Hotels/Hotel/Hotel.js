@@ -5,8 +5,7 @@ import ThemeContext from '../../Context/themeContext';
 import { useContext } from 'react';
 import useAuth from '../../../hooks/useAuth';
 import { Link } from 'react-router-dom';
-import axios from '../../../axios'
-import { objectToArrayWithId } from '../../../helpers/objects';
+
 
 const propTypes = {
     name: PropTypes.string.isRequired,

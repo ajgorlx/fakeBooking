@@ -24,6 +24,7 @@ import AuthenticatedRoute from './components/AuthenticatedRoute/AuthenticatedRou
 import ErrorBoundary from './hoc/ErrorBoundary';
 import AddHotel from './pages/Profile/MyHotels/AddHotel';
 import Register from './pages/Auth/Register/Register';
+import EditHotel from './pages/Profile/MyHotels/EditHotel';
 
 
 const Profile = lazy(() => import ('./pages/Profile/Profile'));
@@ -45,6 +46,7 @@ function App() {
       <Route end path='/' element={<Home />}/>
       <Route path='/hotele/:id' element={<Hotel />}/>
       <Route path='/wyszukaj/:term?' element={<Search />}/>
+      <Route path='/profil/hotele/edytuj/:id' element={<EditHotel />}/>
       <Route path='/profil/hotele/dodaj' element={<AddHotel />}/>
       <Route path="/zaloguj" element={<Login/>}/>
       <Route path="/zarejestruj" element={<Register/>}/>

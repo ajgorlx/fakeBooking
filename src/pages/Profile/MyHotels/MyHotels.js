@@ -3,6 +3,7 @@ import axios from '../../../axios'
 import { useEffect, useState } from "react";
 import { objectToArrayWithId } from "../../../helpers/objects";
 import useAuth from "../../../hooks/useAuth";
+import "./Hotel.css"
 
 export default function MyHotels (props){
 
@@ -37,17 +38,24 @@ export default function MyHotels (props){
             <table className="table">
             <thead>
                 <th>Nazwa</th>
+                <th className="edit">Status</th>
                 <th>Opcje</th>
             </thead>
             <tbody>
                {hotels.map(hotel => (
                 <tr>
                     <td>{hotel.name}</td>
+                    <td className='edit'>
+                    {hotel.status == 1
+                    ? <span className="badge bg-success p-2">aktywny</span>
+                    : <span className="badge bg-secondary p-2">ukryty</span>
+                    }
+                    </td>
                     <td>
-                        <button className="btn btn-warning">Edytuj</button>
+                        <Link to={`/profil/hotele/edytuj/${hotel.id}`} className="btn btn-warning">Edytuj</Link>
                         <button 
                             onClick={() => deleteHandler(hotel.id)} 
-                            className="btn btn-danger">Usuń
+                            className="btn btn-danger m-1">Usuń
                         </button>
                     </td>
                 </tr>
