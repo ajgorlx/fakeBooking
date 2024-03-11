@@ -22,6 +22,7 @@ const EditHotel = props => {
         const hotelData = res.data
 
         delete(hotelData.user_id);
+        delete(hotelData.rating)
 
         setHotel(hotelData)
     }
